@@ -1,0 +1,33 @@
+Manufacture Table Code
+
+CREATE TABLE `manufacturer` (
+  `id` int(6) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `contact` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+Product Table code
+
+CREATE TABLE `product` (
+  `id` int(6) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `price` varchar(6) NOT NULL,
+  `manufacture_id` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+Trigger Code
+
+CREATE TRIGGER `ad_manufacturer` 
+AFTER DELETE ON `manufacturer`
+ FOR EACH ROW 
+DELETE FROM product WHERE manufacture_id=old.id
+
+View Code
+
+CREATE VIEW v_product_list1 AS SELECT p.id AS id, p.name as product_name, m.name as mfg_name
+FROM (product p join manufacturer m)
+WHERE m.id = p.	manufacture_id AND p.price > 5000;
+
+
+
